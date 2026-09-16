@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://dkmkqdpyqjdkk"]
+
+[ext_resource type="Script" uid="uid://dt22auswi5ka6" path="res://addons/signaltimeline/Dock/AnimationTimelineArea.cs" id="1_1vn7w"]
+[ext_resource type="PackedScene" uid="uid://kp3f1spj4cks" path="res://addons/signaltimeline/Dock/TimelineTrackRow.tscn" id="2_7jxcb"]
+[ext_resource type="PackedScene" path="res://addons/signaltimeline/Dock/TimelineKeyframe.tscn" id="2_320ir"]
+[ext_resource type="Script" uid="uid://bys5e0euu52m3" path="res://addons/signaltimeline/Dock/TimelineGrid.cs" id="3_mt6jg"]
+[ext_resource type="PackedScene" uid="uid://bckai34o6yuaa" path="res://addons/signaltimeline/Dock/TimelinePlayhead.tscn" id="4_o10ut"]
+[ext_resource type="PackedScene" uid="uid://c8fjhxm13iixy" path="res://addons/signaltimeline/Dock/AnimationTrackLane.tscn" id="5_dvxn3"]
+
+[node name="AnimationTimelineArea" type="Control" unique_id=1659140986]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1vn7w")
+_keyframeScene = ExtResource("2_320ir")
+_trackInfoScene = ExtResource("2_7jxcb")
+_trackScene = ExtResource("5_dvxn3")
+
+[node name="Background" type="Panel" parent="." unique_id=1214667616]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1558813708]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="RulerRow" type="HBoxContainer" parent="MainVBox" unique_id=976105631]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="LeftHeaderPanel" type="PanelContainer" parent="MainVBox/RulerRow" unique_id=896061272]
+custom_minimum_size = Vector2(218, 30)
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="MainVBox/RulerRow/LeftHeaderPanel" unique_id=1143048601]
+layout_mode = 2
+
+[node name="RulerPanel" type="PanelContainer" parent="MainVBox/RulerRow" unique_id=772915037]
+layout_mode = 2
+size_flags_horizontal = 3
+offset_transform_enabled = true
+
+[node name="RulerViewport" type="Control" parent="MainVBox/RulerRow/RulerPanel" unique_id=441304263]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RulerContent" type="Control" parent="MainVBox/RulerRow/RulerPanel/RulerViewport" unique_id=53277286]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BodyRow" type="HBoxContainer" parent="MainVBox" unique_id=366732976]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="SidebarPanel" type="PanelContainer" parent="MainVBox/BodyRow" unique_id=365307466]
+custom_minimum_size = Vector2(218.025, 0)
+layout_mode = 2
+
+[node name="Sidebar" type="VBoxContainer" parent="MainVBox/BodyRow/SidebarPanel" unique_id=1554213894]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="AddTrack" type="Button" parent="MainVBox/BodyRow/SidebarPanel/Sidebar" unique_id=238239465]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(207, 0)
+layout_mode = 2
+text = "+"
+
+[node name="TimelinePanel" type="PanelContainer" parent="MainVBox/BodyRow" unique_id=2110837044]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TimelineViewport" type="Control" parent="MainVBox/BodyRow/TimelinePanel" unique_id=1095879983]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+
+[node name="Grid" type="Control" parent="MainVBox/BodyRow/TimelinePanel/TimelineViewport" unique_id=202086354]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_mt6jg")
+
+[node name="KeyframeLayer" type="Control" parent="MainVBox/BodyRow/TimelinePanel/TimelineViewport" unique_id=985208479]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Tracks" type="VBoxContainer" parent="MainVBox/BodyRow/TimelinePanel/TimelineViewport" unique_id=1431893669]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="Playhead" parent="MainVBox/BodyRow/TimelinePanel/TimelineViewport" unique_id=1761261523 instance=ExtResource("4_o10ut")]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 618.0

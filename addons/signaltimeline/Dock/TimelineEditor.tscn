@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://d1cpfu517gjjg"]
+
+[ext_resource type="Script" uid="uid://cw0j2uhc0x0ia" path="res://addons/signaltimeline/Dock/TimelineEditor.cs" id="1_cmpfj"]
+[ext_resource type="PackedScene" uid="uid://dkmkqdpyqjdkk" path="res://addons/signaltimeline/Dock/AnimationTimelineArea.tscn" id="2_r0gvg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleRoot"]
+bg_color = Color(0.0706, 0.0471, 0.0863, 1)
+
+[node name="AnimationEditorMockup" type="Control" unique_id=1422130342]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_cmpfj")
+
+[node name="Background" type="Panel" parent="." unique_id=1667028396]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleRoot")
+
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1069979234]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="TopBar" type="PanelContainer" parent="MainVBox" unique_id=281390604]
+custom_minimum_size = Vector2(0, 43.965)
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="MainVBox/TopBar" unique_id=1768086932]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="RewindButton" type="Button" parent="MainVBox/TopBar/HBox" unique_id=2018404864]
+unique_name_in_owner = true
+layout_mode = 2
+text = "◀|"
+
+[node name="StopButton" type="Button" parent="MainVBox/TopBar/HBox" unique_id=38358686]
+unique_name_in_owner = true
+layout_mode = 2
+text = "■"
+
+[node name="PlayButton" type="Button" parent="MainVBox/TopBar/HBox" unique_id=1762611819]
+unique_name_in_owner = true
+layout_mode = 2
+text = "▶"
+
+[node name="TimePanel" type="PanelContainer" parent="MainVBox/TopBar/HBox" unique_id=136926171]
+custom_minimum_size = Vector2(78, 30)
+layout_mode = 2
+
+[node name="TimeLabel" type="Label" parent="MainVBox/TopBar/HBox/TimePanel" unique_id=1879180911]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0.0"
+vertical_alignment = 1
+
+[node name="TimelineCaption" type="Label" parent="MainVBox/TopBar/HBox" unique_id=2140603527]
+layout_mode = 2
+text = "Timeline"
+vertical_alignment = 1
+
+[node name="AnimationName" type="OptionButton" parent="MainVBox/TopBar/HBox" unique_id=1471788555]
+custom_minimum_size = Vector2(250, 30)
+layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "new_animation"
+popup/item_0/id = 0
+
+[node name="TopSpacer" type="Control" parent="MainVBox/TopBar/HBox" unique_id=304013278]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TopPadRight" type="Control" parent="MainVBox/TopBar/HBox" unique_id=1473748966]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="TimelineCanvas" parent="MainVBox" unique_id=662869226 instance=ExtResource("2_r0gvg")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BottomBar" type="PanelContainer" parent="MainVBox" unique_id=730727149]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+
+[node name="BottomHBox" type="HBoxContainer" parent="MainVBox/BottomBar" unique_id=104360954]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="BottomPad" type="Control" parent="MainVBox/BottomBar/BottomHBox" unique_id=1793425541]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+
+[node name="BottomSpacer" type="Control" parent="MainVBox/BottomBar/BottomHBox" unique_id=836905847]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BezierButton" type="Button" parent="MainVBox/BottomBar/BottomHBox" unique_id=250913965]
+layout_mode = 2
+text = "⌁"
+
+[node name="FilterButton" type="Button" parent="MainVBox/BottomBar/BottomHBox" unique_id=1800102691]
+layout_mode = 2
+text = "▼"
+
+[node name="SortButton" type="Button" parent="MainVBox/BottomBar/BottomHBox" unique_id=171654836]
+layout_mode = 2
+text = "≡"
+
+[node name="SnapButton" type="Button" parent="MainVBox/BottomBar/BottomHBox" unique_id=28094789]
+layout_mode = 2
+toggle_mode = true
+text = "⌁"
+
+[node name="ZoomIcon" type="Label" parent="MainVBox/BottomBar/BottomHBox" unique_id=336806939]
+layout_mode = 2
+text = "◐"
+vertical_alignment = 1
+
+[node name="ZoomSlider" type="HSlider" parent="MainVBox/BottomBar/BottomHBox" unique_id=1191338953]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+value = 25.0
+
+[node name="BottomPadRight" type="Control" parent="MainVBox/BottomBar/BottomHBox" unique_id=1519689592]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2

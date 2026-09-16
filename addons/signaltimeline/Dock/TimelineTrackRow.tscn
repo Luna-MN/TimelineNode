@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://kp3f1spj4cks"]
+
+[ext_resource type="Script" uid="uid://cnl64y8ot46tr" path="res://addons/signaltimeline/Dock/TimelineTrackRow.cs" id="1_ciibb"]
+
+[sub_resource type="DPITexture" id="DPITexture_l2ees"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"m5 1v1h-4v2h14v-2h-4v-1zm-3 4v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8zm1 2h2v6h-2zm4 0h2v6h-2zm4 0h2v6h-2z\"/></svg>
+"
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
+}
+
+[node name="TimelineTrackRow" type="PanelContainer" unique_id=1621448747]
+custom_minimum_size = Vector2(207, 28)
+script = ExtResource("1_ciibb")
+
+[node name="HBox" type="HBoxContainer" parent="." unique_id=612096663]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Pad" type="Control" parent="HBox" unique_id=1577197258]
+custom_minimum_size = Vector2(6, 0)
+layout_mode = 2
+
+[node name="EnabledCheck" type="CheckBox" parent="HBox" unique_id=1405056719]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+
+[node name="TypeIcon" type="Label" parent="HBox" unique_id=857219868]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 0
+text = "◆"
+vertical_alignment = 1
+
+[node name="TrackNameLabel" type="Label" parent="HBox" unique_id=1431041739]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 0
+text = "clip_text"
+vertical_alignment = 1
+
+[node name="Delete" type="Button" parent="HBox" unique_id=708712780]
+unique_name_in_owner = true
+layout_mode = 2
+icon = SubResource("DPITexture_l2ees")

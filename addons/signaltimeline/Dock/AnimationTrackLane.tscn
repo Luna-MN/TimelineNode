@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c8fjhxm13iixy"]
+
+[ext_resource type="Script" uid="uid://xh8ytyvat4l0" path="res://addons/signaltimeline/Dock/AnimationTrackLane.cs" id="1_7m784"]
+[ext_resource type="PackedScene" uid="uid://cloucj610d3lf" path="res://addons/signaltimeline/Dock/Triggers/DefaultTrigger.tscn" id="2_heawn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_320ir"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0.4392157)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="AnimationTrackLane" type="PanelContainer" unique_id=1117411698]
+custom_minimum_size = Vector2(0, 28)
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_320ir")
+script = ExtResource("1_7m784")
+_triggerScene = ExtResource("2_heawn")
+
+[node name="TriggerLayer" type="Control" parent="." unique_id=73901743]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2

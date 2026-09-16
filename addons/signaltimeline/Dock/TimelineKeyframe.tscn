@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://b4nmku8ock3d4" path="res://addons/signaltimeline/Dock/TimelineKeyframe.cs" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="Key"]
+bg_color = Color(0.8471, 0.8118, 0.8706, 1)
+
+[node name="TimelineKeyframe" type="Button"]
+custom_minimum_size = Vector2(10, 10)
+offset_right = 10.0
+offset_bottom = 10.0
+rotation = 0.785398
+focus_mode = 0
+flat = true
+theme_override_styles/normal = SubResource("Key")
+theme_override_styles/hover = SubResource("Key")
+theme_override_styles/pressed = SubResource("Key")
+script = ExtResource("1")

@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://nh3n5dr12b1d"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_mf4mk"]
+script/source = "using Godot;
+
+// Optional, add to execute in the editor.
+[Tool]
+
+// Icons are optional.
+// Alternatively, you may use the UID of the icon or the absolute path.
+[Icon(\"icon.svg\")]
+
+// Automatically register the node in the Create New Node dialog
+// and make it available for use with other scripts.
+[GlobalClass]
+public partial class MyButton : Button
+{
+    public override void _EnterTree()
+    {
+        Pressed += Clicked;
+    }
+
+    public void Clicked()
+    {
+        GD.Print(\"You clicked me!\");
+    }
+}"
+
+[node name="Control" type="Control" unique_id=79830865]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MyButton" type="Button" parent="." unique_id=1578759732]
+layout_mode = 0
+offset_right = 265.0
+offset_bottom = 237.0
+script = SubResource("CSharpScript_mf4mk")
+metadata/_custom_type_script = "uid://c680csf6hitcj"
