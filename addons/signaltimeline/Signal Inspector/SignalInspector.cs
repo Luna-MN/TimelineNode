@@ -11,7 +11,6 @@ public partial class SignalInspector : Tree
     public Dictionary<string, TreeItem> Signals = new();
     public override void _EnterTree()
     {
-        GD.Print("Meow");
         Columns = 1;
         HideRoot = false;
 

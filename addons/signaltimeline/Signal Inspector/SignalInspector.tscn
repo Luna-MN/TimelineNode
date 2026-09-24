@@ -1,11 +1,22 @@
 [gd_scene format=3 uid="uid://d088xqeqxrugr"]
 
 [ext_resource type="Script" uid="uid://cxsmdx6l4uqp4" path="res://addons/signaltimeline/Signal Inspector/SignalInspector.cs" id="1_e8p1a"]
+[ext_resource type="Script" uid="uid://bwogc7afswmja" path="res://addons/signaltimeline/Signal Inspector/TriggerInspector.cs" id="2_03ixv"]
 
-[node name="Tree" type="Tree" unique_id=48370832]
+[node name="VSplitContainer" type="VSplitContainer" unique_id=634720769]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Signals" type="Tree" parent="." unique_id=48370832]
+layout_mode = 2
+size_flags_horizontal = 17
+size_flags_vertical = 3
 script = ExtResource("1_e8p1a")
+
+[node name="Triggers" type="Tree" parent="." unique_id=978624882]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("2_03ixv")

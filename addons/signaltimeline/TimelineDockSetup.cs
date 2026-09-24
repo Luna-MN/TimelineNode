@@ -1,5 +1,6 @@
 #if TOOLS
 using Godot;
+using TimeLinePlugin.addons.signaltimeline.Dock;
 
 [Tool]
 public partial class TimelineDockSetup : EditorPlugin
@@ -8,6 +9,7 @@ public partial class TimelineDockSetup : EditorPlugin
     private EditorDock _signalDock;
     public override void _EnterTree()
     {
+        Globals.Resource = new TimelineResource();
         var _dock_scene = GD.Load<PackedScene>("res://addons/signaltimeline/Dock/TimelineEditor.tscn").Instantiate<Control>();
 
         // Create the dock and add the loaded scene to it.
@@ -24,7 +26,7 @@ public partial class TimelineDockSetup : EditorPlugin
 
         AddDock(_dock);
         
-        var _signalDock_scene = GD.Load<PackedScene>("res://addons/signaltimeline/Signal Inspector/SignalInspector.tscn").Instantiate<SignalInspector>();
+        var _signalDock_scene = GD.Load<PackedScene>("res://addons/signaltimeline/Signal Inspector/SignalInspector.tscn").Instantiate<VSplitContainer>();
 
         _signalDock = new EditorDock();
         _signalDock.AddChild(_signalDock_scene);

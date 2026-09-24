@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://nh3n5dr12b1d"]
 
+[ext_resource type="Script" uid="uid://b4ep1ofegn5w" path="res://addons/signaltimeline/Node/Timeline.cs" id="1_37kl0"]
+
 [sub_resource type="CSharpScript" id="CSharpScript_mf4mk"]
 script/source = "using Godot;
 
@@ -39,4 +41,7 @@ layout_mode = 0
 offset_right = 265.0
 offset_bottom = 237.0
 script = SubResource("CSharpScript_mf4mk")
-metadata/_custom_type_script = "uid://c680csf6hitcj"
+
+[node name="Timeline" type="Timer" parent="." unique_id=1503123656]
+script = ExtResource("1_37kl0")
+metadata/_custom_type_script = "uid://b4ep1ofegn5w"
