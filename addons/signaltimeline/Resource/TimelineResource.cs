@@ -14,13 +14,14 @@ public partial class TimelineResource : Resource
     public Dictionary<string, SignalResource> Signals = new();
 
     public event Action<TriggerResource> AddTrigger;
-    public event Action<TriggerResource> AddSignal;
+    public event Action<SignalResource> AddSignal;
     public void CreateSignal(string name, Dictionary<string, Variant> args, Variant.Type type)
     {
         args["type"] = (int)type;
         args["name"] = name;
 
         Signals[name].args = args;
+        Signals[name].name = name;
 
         var arguments = new Godot.Collections.Array()
         {
@@ -29,70 +30,118 @@ public partial class TimelineResource : Resource
 
         AddUserSignal(name, arguments);
     }
-    public PopupPanel OpenSignalsPopup(string triggerName, Control owner, Action<string>? onSignalSelected = null)
-    {
-        var popup = new PopupPanel
+        /// <summary>
+        /// Opens a popup that lets the user either create a new named signal
+        /// or pick an existing signal to reference.
+        /// The chosen (or newly created) signal name is returned via <paramref name="onSignalSelected"/>.
+        /// </summary>
+        public PopupPanel OpenSignalsPopup(Control owner, Action<string, SignalResource>? onSignalSelected = null)
         {
-            MinSize = new Vector2I(320, 300)
-        };
-
-        var margin = new MarginContainer();
-        margin.AddThemeConstantOverride("margin_left", 8);
-        margin.AddThemeConstantOverride("margin_top", 8);
-        margin.AddThemeConstantOverride("margin_right", 8);
-        margin.AddThemeConstantOverride("margin_bottom", 8);
-
-        var scroll = new ScrollContainer
-        {
-            SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
-            SizeFlagsVertical = Control.SizeFlags.ExpandFill
-        };
-
-        var container = new VBoxContainer
-        {
-            SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
-        };
-
-        if (Signals.Count == 0)
-        {
-            container.AddChild(new Label
+            var popup = new PopupPanel
             {
-                Text = "No signals found."
-            });
-        }
-        else
-        {
-            foreach (var signalPair in Signals)
+                MinSize = new Vector2I(320, 320)
+            };
+
+            var margin = new MarginContainer();
+            margin.AddThemeConstantOverride("margin_left", 8);
+            margin.AddThemeConstantOverride("margin_top", 8);
+            margin.AddThemeConstantOverride("margin_right", 8);
+            margin.AddThemeConstantOverride("margin_bottom", 8);
+
+            var root = new VBoxContainer
             {
-                string signalName = signalPair.Key;
-                var signal = signalPair.Value;
+                SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
+                SizeFlagsVertical = Control.SizeFlags.ExpandFill
+            };
 
-                var button = new Button
-                {
-                    Text = BuildSignalText(signalName, signal),
-                    Alignment = HorizontalAlignment.Left,
-                    SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
-                };
+            // --- "Create new signal" section ---
+            root.AddChild(new Label { Text = "Create new signal" });
 
-                button.Pressed += () =>
-                {
-                    onSignalSelected?.Invoke(signalName);
-                    popup.QueueFree();
-                };
+            var newRow = new HBoxContainer
+            {
+                SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
+            };
 
-                container.AddChild(button);
+            var nameEdit = new LineEdit
+            {
+                PlaceholderText = "Signal name",
+                SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
+            };
+            newRow.AddChild(nameEdit);
+
+            var createButton = new Button { Text = "Create" };
+            newRow.AddChild(createButton);
+            root.AddChild(newRow);
+
+            root.AddChild(new HSeparator());
+
+            // --- "Existing signals" section ---
+            root.AddChild(new Label { Text = "Reference existing signal" });
+
+            var scroll = new ScrollContainer
+            {
+                SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
+                SizeFlagsVertical = Control.SizeFlags.ExpandFill
+            };
+
+            var list = new VBoxContainer
+            {
+                SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
+            };
+
+            if (Signals.Count == 0)
+            {
+                list.AddChild(new Label { Text = "No signals yet." });
             }
+            else
+            {
+                foreach (var pair in Signals)
+                {
+                    string signalName = pair.Key;
+                    SignalResource signalRes = pair.Value;
+
+                    var button = new Button
+                    {
+                        Text = BuildSignalText(signalName, signalRes),
+                        Alignment = HorizontalAlignment.Left,
+                        SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
+                    };
+
+                    button.Pressed += () =>
+                    {
+                        onSignalSelected?.Invoke(signalName, signalRes);
+                        popup.QueueFree();
+                    };
+
+                    list.AddChild(button);
+                }
+            }
+
+            scroll.AddChild(list);
+            root.AddChild(scroll);
+
+            createButton.Pressed += () =>
+            {
+                string chosen = nameEdit.Text?.Trim() ?? string.Empty;
+                if (string.IsNullOrEmpty(chosen) || Signals.ContainsKey(chosen))
+                    return;
+
+                var newResource = new SignalResource { name = chosen };
+                Signals[chosen] = newResource;
+                AddSignal?.Invoke(newResource);
+
+                onSignalSelected?.Invoke(chosen, newResource);
+                popup.QueueFree();
+            };
+
+            margin.AddChild(root);
+            popup.AddChild(margin);
+
+            owner.AddChild(popup);
+            popup.PopupCentered();
+
+            return popup;
         }
-
-        scroll.AddChild(container);
-        margin.AddChild(scroll);
-        popup.AddChild(margin);
-
-        owner.AddChild(popup);
-        popup.PopupCentered();
-
-        return popup;
-    }
     private string BuildSignalText(string signalName, SignalResource signal)
     {
         if (!signal.args.TryGetValue("type", out Variant typeVariant))
