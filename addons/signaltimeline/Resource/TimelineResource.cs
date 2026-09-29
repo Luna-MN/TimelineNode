@@ -10,4 +10,6 @@ public partial class TimelineResource : Resource
     public Dictionary<string, TriggerResource> Triggers = new();
     [Export]
     public Dictionary<string, SignalResource> Signals = new();
+    [Export]
+    public float Duration = 10.0f;
 }

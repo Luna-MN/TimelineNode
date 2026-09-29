@@ -1,10 +1,11 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class TriggerResource : Resource
 {
     public Godot.Collections.Dictionary<string, Godot.Collections.Dictionary<string, Variant>> Signals = new();
-
+    public List<float> ExecutionTimes;
     public void CreateSignal(string name, Godot.Collections.Dictionary<string, Variant> args, Variant.Type type)
     {
         args["type"] = (int)type;
@@ -20,6 +21,19 @@ public partial class TriggerResource : Resource
         AddUserSignal(name, arguments);
     }
 
+    public void SendSignal(string name, Godot.Collections.Dictionary<string, Variant> args)
+    {
+        
+    }
+
+    public void SendSignals()
+    {
+        foreach (var signalPair in Signals)
+        {
+            SendSignal(signalPair.Key, signalPair.Value);
+        }
+
+    }
     public PopupPanel OpenSignalsPopup(Control owner, Action<string>? onSignalSelected = null)
     {
         var popup = new PopupPanel
