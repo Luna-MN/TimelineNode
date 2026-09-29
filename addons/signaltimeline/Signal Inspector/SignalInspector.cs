@@ -55,7 +55,7 @@ public partial class SignalInspector : Tree
 
     private void AddSignal()
     {
-        Globals.Resource.OpenSignalsPopup( this);
+        Globals.Resource.OpenSignalsPopup(this);
     }
 
     private void OnTreeItemEdited()
