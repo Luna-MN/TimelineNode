@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using TimeLinePlugin.addons.signaltimeline.Dock;
 
 [Tool]
 public partial class AnimationTrackLane : PanelContainer
@@ -56,12 +57,27 @@ public partial class AnimationTrackLane : PanelContainer
     {
         if (id == AddTriggerMenuId)
         {
-            var trigger = _triggerScene.Instantiate<Control>();
-            GetNode("%TriggerLayer").AddChild(trigger);
-            trigger.Position = new Vector2(_lastRightClickLaneX, trigger.Position.Y);
+            if (Globals.Resource == null)
+            {
+                GD.PushWarning("No TimelineResource set on Globals.Resource; cannot open trigger popup.");
+                return;
+            }
+
+            float spawnX = _lastRightClickLaneX;
+
+            Globals.Resource.OpenTriggerPopup(this, (triggerName, _) =>
+            {
+                SpawnTrigger(triggerName, spawnX);
+            });
         }
     }
-
+    private void SpawnTrigger(string triggerName, float laneX)
+    {
+        var trigger = _triggerScene.Instantiate<Control>();
+        trigger.Name = triggerName;
+        GetNode("%TriggerLayer").AddChild(trigger);
+        trigger.Position = new Vector2(laneX, trigger.Position.Y);
+    }
     public void SetSize(Vector2 size)
     {
         Size = new Vector2(Size.X, size.Y);

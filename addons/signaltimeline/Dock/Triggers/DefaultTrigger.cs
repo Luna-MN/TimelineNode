@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using TimeLinePlugin.addons.signaltimeline.Dock;
+
 [Tool]
 public partial class DefaultTrigger : ColorRect
 {
@@ -8,13 +10,13 @@ public partial class DefaultTrigger : ColorRect
     private PopupMenu _popupMenu;
     private const int AddSignalId = 1;
     private const int ShowSignalId = 2;
-    
+
     public override void _Ready()
     {
-        Resource = new TriggerResource();
+        Resource = Globals.Resource.GetTriggerResource(Name);
         inspector = EditorInterface.Singleton.GetInspector();
         _popupMenu = new PopupMenu();
-        _popupMenu.AddItem("Show Signals", ShowSignalId);
+        _popupMenu.AddItem("Add Signal", AddSignalId);
         _popupMenu.IdPressed += OnPopupMenuIdPressed;
         AddChild(_popupMenu);   
     }
@@ -33,13 +35,12 @@ public partial class DefaultTrigger : ColorRect
     }
     private void OnPopupMenuIdPressed(long id)
     {
-        if (id == ShowSignalId)
+        if (id == AddSignalId)
         {
-            Resource.OpenSignalsPopup(this, signalName =>
+            Globals.Resource.OpenSignalsPopup(this, (signalName, signalResource) =>
             {
-                GD.Print($"Selected signal: {signalName}");
+                Resource.AddSignal(signalName, signalResource);
             });
         }
-
     }
 }

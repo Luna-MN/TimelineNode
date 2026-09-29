@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using TimeLinePlugin.addons.signaltimeline.Dock;
+
 [Tool]
 public partial class SignalInspector : Tree
 {
@@ -11,12 +13,12 @@ public partial class SignalInspector : Tree
     public Dictionary<string, TreeItem> Signals = new();
     public override void _EnterTree()
     {
-        GD.Print("Meow");
         Columns = 1;
         HideRoot = false;
 
         ButtonClicked += OnButtonClicked;
         ItemEdited += OnTreeItemEdited;
+        Globals.Resource.AddSignal += AddSignal;
         BuildTree();
     }
 
@@ -40,17 +42,20 @@ public partial class SignalInspector : Tree
 
         AddSignal();
     }
-
-    private void AddSignal()
+    private void AddSignal(SignalResource signal)
     {
         TreeItem signalItem = CreateItem(_signalsRoot);
-        signalItem.SetText(0, "New Signal");
+        signalItem.SetText(0, signal.name);
         signalItem.SetEditable(0, true);
 
         signalItem.Select(0);
         
-        Signals.Add("New Signal", signalItem);
-        
+        Signals.Add(signal.name, signalItem);
+    }
+
+    private void AddSignal()
+    {
+        Globals.Resource.OpenSignalsPopup( this);
     }
 
     private void OnTreeItemEdited()

@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using Godot.Collections;
+using TimeLinePlugin.addons.signaltimeline.Dock;
+using CollectionExtensions = System.Collections.Generic.CollectionExtensions;
 
 [Tool]
 [GlobalClass]
